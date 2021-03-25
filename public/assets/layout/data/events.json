@@ -1,0 +1,142 @@
+{
+    "data": [
+    	{
+            "id":"2021-0001",
+			"name": "Sfilata Marzo 2021",
+    		"languages":[
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://kjkjdk.ekekk.amazon.con",
+					"status":"started",
+					"lang":"it",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"20",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				},
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://hsgjwu.ekekk.amazon.con",
+					"status":"started",
+					"lang":"uk",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"50",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				},
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://heheeh.ekekk.amazon.con",
+					"status":"started",
+					"lang":"ru",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"20",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				}],
+    		"infraState": "ready",
+			"appState": "cs",
+			"secure": "YES"
+    	},
+		{
+			"id":"2021-0002",
+            "name": "Evento Interno Italia",
+    		"languages":[
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://kjkjdk.ekekk.amazon.con",
+					"status":"pending",
+					"lang":"it",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"20",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				}],
+    		"infraState": "pending",
+			"appState": "pending",
+			"secure": "YES"
+    	},
+		{
+			"id":"2021-0003",
+            "name": "Evento Mondiale inizio 2021",
+    		"languages":[
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://kjkjdk.ekekk.amazon.con",
+					"status":"started",
+					"lang":"it",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"20",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				},
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://hsgjwu.ekekk.amazon.con",
+					"status":"started",
+					"lang":"uk",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"50",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				},
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://heheeh.ekekk.amazon.con",
+					"status":"started",
+					"lang":"ru",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"20",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				},
+				{
+					"ch_id":"213314fgg",
+					"endpont":"rtmp://heheeh.ekekk.amazon.con",
+					"status":"stopped",
+					"lang":"cn",
+					"input_codec":"AVC",
+					"input_res":"HD",
+					"input_br":"20",
+					"output_codec":"H264",
+					"output_res":"HD",
+					"output_rcm":"VBR",
+					"output_br":"5",
+					"output_fr":"30"
+				}
+			],
+    		"infraState": "ready",
+			"appState": "vod",
+			"secure": "NO"
+    	}
+    	
+    ]
+}
