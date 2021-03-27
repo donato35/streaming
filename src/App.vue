@@ -1,5 +1,5 @@
 <template>
-	<div :class="containerClass" @click="onWrapperClick">
+	<div v-show="false" :class="containerClass" @click="onWrapperClick">
 		<AppTopBar @menu-toggle="onMenuToggle" />
 
         <transition name="layout-sidebar">
@@ -23,10 +23,14 @@
 
 		<AppFooter />
 	</div>
+    <div>
+        <AppLogin/>
+    </div>  
 </template>
 
 <script>
 import AppTopBar from './AppTopbar.vue';
+import AppLogin from './AppLogin.vue';
 import AppProfile from './AppProfile.vue';
 import AppMenu from './AppMenu.vue';
 import AppConfig from './AppConfig.vue';
@@ -251,6 +255,7 @@ export default {
         'AppMenu': AppMenu,
         'AppConfig': AppConfig,
         'AppFooter': AppFooter,
+        'AppLogin': AppLogin,
     }
 }
 </script>

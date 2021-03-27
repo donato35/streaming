@@ -29,10 +29,12 @@
 		"sass-loader": "^8.0.2"
 	},
 	"dependencies": {
+		"@aws-amplify/ui-components": "^1.1.0",
 		"@fullcalendar/core": "4.0.2",
 		"@fullcalendar/daygrid": "4.0.1",
 		"@fullcalendar/interaction": "4.0.2",
 		"@fullcalendar/timegrid": "4.0.1",
+		"aws-amplify": "^3.3.25",
 		"axios": "^0.19.0",
 		"chart.js": "2.7.3",
 		"core-js": "^3.6.5",
@@ -41,6 +43,8 @@
 		"primevue": "3.3.4",
 		"prismjs": "^1.15.0",
 		"vue": "3.0.6",
-		"vue-router": "^4.0.0-0"
+		"vue-router": "^4.0.0-0",
+		"vuex": "^4.0.0",
+		"vuex-persist": "^3.1.3"
 	}
 }

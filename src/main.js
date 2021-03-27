@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { reactive } from 'vue';
+
 import router from './router';
 import App from './App.vue';
 import PrimeVue from 'primevue/config';
@@ -85,9 +86,12 @@ import ToggleButton from 'primevue/togglebutton';
 import Tree from 'primevue/tree';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
-
+import store from './store'
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import {applyPolyfills,defineCustomElements} from '@aws-amplify/ui-components/loader';
+import { Hub } from "aws-amplify";
 import CodeHighlight from './AppCodeHighlight';
-
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeflex/primeflex.css';
@@ -99,19 +103,53 @@ import '@fullcalendar/timegrid/main.min.css';
 import './assets/layout/layout.scss';
 import './assets/layout/flags/flags.css';
 
+Amplify.configure(aws_exports);
+applyPolyfills().then(() => {
+  defineCustomElements(window);
+})
+
+const listener = (data) => {
+  switch (data.payload.event) {
+    case 'signIn':
+      console.log('user signed in');
+      store.commit('events/increment',"user signed in")
+      break;
+    case 'signUp':
+      console.log('user signed up');
+      break;
+    case 'signOut':
+      console.log('user signed out');
+      break;
+    case 'signIn_failure':
+      console.log('user sign in failed');
+      break;
+    case 'tokenRefresh':
+      console.log('token refresh succeeded');
+      break;
+    case 'tokenRefresh_failure':
+      console.log('token refresh failed');
+      break;
+    case 'configured':
+      console.log('the Auth module is configured');
+    }
+}
+Hub.listen('auth', listener);
+
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
+    console.log(to)
+    console.log(from)
     next();
 });
 
 const app = createApp(App);
-
 app.config.globalProperties.$appState = reactive({ inputStyle: 'outlined' });
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(router);
+app.use(store);
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);
