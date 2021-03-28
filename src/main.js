@@ -91,6 +91,7 @@ import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import {applyPolyfills,defineCustomElements} from '@aws-amplify/ui-components/loader';
 import { Hub } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import CodeHighlight from './AppCodeHighlight';
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
@@ -103,44 +104,53 @@ import '@fullcalendar/timegrid/main.min.css';
 import './assets/layout/layout.scss';
 import './assets/layout/flags/flags.css';
 
+//--------------- Amplify Configuration ----------------------
+
 Amplify.configure(aws_exports);
 applyPolyfills().then(() => {
   defineCustomElements(window);
 })
 
+//--------------- Amplify Auth Events ----------------------
+
 const listener = (data) => {
   switch (data.payload.event) {
     case 'signIn':
       console.log('user signed in');
-      store.commit('events/increment',"user signed in")
-      break;
-    case 'signUp':
-      console.log('user signed up');
+      store.dispatch('general/storeUsername',data.payload.data.attributes.name+" "+data.payload.data.attributes.family_name)
+      store.dispatch('general/storeIsLogged',true)
+      router.push('/dashboard')
       break;
     case 'signOut':
       console.log('user signed out');
+      store.dispatch('general/storeIsLogged',false)
+      store.dispatch('general/storeUsername',null)
+      router.push('/')
       break;
     case 'signIn_failure':
       console.log('user sign in failed');
       break;
-    case 'tokenRefresh':
-      console.log('token refresh succeeded');
-      break;
-    case 'tokenRefresh_failure':
-      console.log('token refresh failed');
-      break;
-    case 'configured':
-      console.log('the Auth module is configured');
     }
 }
 Hub.listen('auth', listener);
 
+if(!store.state.general.isLogged)
+Auth.signOut();
+
+//--------------- Before Router Check ----------------------
+
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
-    console.log(to)
-    console.log(from)
-    next();
+    if(to.name != "login" && !store.state.general.isLogged){
+      next({ name: 'login' })
+    }  
+    else if (to.name == "login" && store.state.general.isLogged)
+      next({ name: 'dashboard' })
+    else
+      next();
 });
+
+//--------------- App configuration ----------------------
 
 const app = createApp(App);
 app.config.globalProperties.$appState = reactive({ inputStyle: 'outlined' });
@@ -148,8 +158,9 @@ app.config.globalProperties.$appState = reactive({ inputStyle: 'outlined' });
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
-app.use(router);
 app.use(store);
+app.use(router);
+
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);

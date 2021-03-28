@@ -6,14 +6,14 @@ const GRAPHQL = {
   test: "https://2bq75k6kszds3jr57tux3g5ffm.appsync-api.eu-west-1.amazonaws.com/graphql"
 };
 const USER_POOL = {
-  local: "eu-west-1_OV8tpj9Ut",
-  dev: "eu-west-1_OV8tpj9Ut",
-  test: "eu-west-1_OV8tpj9Ut"
+  local: "eu-west-1_uFRDME2zV",
+  dev: "eu-west-1_uFRDME2zV",
+  test: "eu-west-1_uFRDME2zV"
 }
 const USER_CLIENT = {
-  local: "2p8ka9ngllm3ev3u0nd88o7161",
-  dev: "2p8ka9ngllm3ev3u0nd88o7161",
-  test: "2p8ka9ngllm3ev3u0nd88o7161"
+  local: "6c6qa0i673ljhqsdhoqu9u0k0n",
+  dev: "6c6qa0i673ljhqsdhoqu9u0k0n",
+  test: "6c6qa0i673ljhqsdhoqu9u0k0n"
 }
 
 export default {

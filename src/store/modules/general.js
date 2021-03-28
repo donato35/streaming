@@ -2,7 +2,8 @@
 
 
 const state = () => ({
-    user: null
+    username: null,
+    isLogged: false
   })
   
   // getters
@@ -10,18 +11,22 @@ const state = () => ({
   
   // actions
   const actions = {
-    storeUser({ commit }, user) {
-      commit("setUser", user);
-    }
+    storeUsername({ commit }, username) {
+      commit("setUsername", username);
+    },
+    storeIsLogged({ commit }, lstate) {
+      commit("setIsLogged", lstate);
+    },
+
   }
   
   // mutations
   const mutations = {
-    increment (state, testo) {
-      state.prova =testo
+    setUsername(state, username) {
+      state.username = username;
     },
-    setUser(state, u) {
-      state.user = u;
+    setIsLogged(state, lstate) {
+      state.isLogged = lstate;
     }
   }
   

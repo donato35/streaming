@@ -13,6 +13,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+	name: 'monitoring',
 	computed: mapState({
 		localVar: state => state.events.prova
 	}),
