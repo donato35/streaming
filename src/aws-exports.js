@@ -1,19 +1,19 @@
 export const STAGE = process.env.VUE_APP_STAGE || "local";
 const AWS_REGION = "eu-west-1";
 const GRAPHQL = {
-  local: "https://33ewgzqfvvfcdmhmstcmsjfdny.appsync-api.eu-west-1.amazonaws.com/graphql",
-  dev: "https://33ewgzqfvvfcdmhmstcmsjfdny.appsync-api.eu-west-1.amazonaws.com/graphql",
-  test: "https://2bq75k6kszds3jr57tux3g5ffm.appsync-api.eu-west-1.amazonaws.com/graphql"
+  local: "https://nryckdzv4bfbtahpg7xhjrey64.appsync-api.eu-west-1.amazonaws.com/graphql",
+  dev: "https://nryckdzv4bfbtahpg7xhjrey64.appsync-api.eu-west-1.amazonaws.com/graphql",
+  test: "https://nryckdzv4bfbtahpg7xhjrey64.appsync-api.eu-west-1.amazonaws.com/graphql"
 };
 const USER_POOL = {
-  local: "eu-west-1_uFRDME2zV",
-  dev: "eu-west-1_uFRDME2zV",
-  test: "eu-west-1_uFRDME2zV"
+  local: "eu-west-1_yFaUiXe64",
+  dev: "eu-west-1_yFaUiXe64",
+  test: "eu-west-1_yFaUiXe64"
 }
 const USER_CLIENT = {
-  local: "6c6qa0i673ljhqsdhoqu9u0k0n",
-  dev: "6c6qa0i673ljhqsdhoqu9u0k0n",
-  test: "6c6qa0i673ljhqsdhoqu9u0k0n"
+  local: "1cd89fbti3lribodt3rcsrqhnr",
+  dev: "1cd89fbti3lribodt3rcsrqhnr",
+  test: "1cd89fbti3lribodt3rcsrqhnr"
 }
 
 export default {

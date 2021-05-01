@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-export default class CountryService {
+export default class CostService {
 
-    getCountries() {
-        return axios.get('assets/layout/data/countries.json').then(res => res.data.data);
+    async test() {
+        //const res = await axios.get('assets/layout/data/countries.json');
+        //return res.data.data;
+        console.log("ciao")
     }
 }
