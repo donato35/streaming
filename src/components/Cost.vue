@@ -2,7 +2,7 @@
 <div class="p-fluid p-grid p-formgrid">
 	<div class="p-field p-col-12 p-sm-12 p-lg-2">
 		<label for="basic">Select Date Range</label>
-		<Calendar v-model="selectedDate" selectionMode="range" :manualInput="false" :numberOfMonths="2" :showIcon="true" dateFormat="yy-mm-dd">
+		<Calendar v-model="selectedDate" :minDate="minDate" :maxDate="maxDate" selectionMode="range" :manualInput="false" :numberOfMonths="2" :showIcon="true" dateFormat="yy-mm-dd">
 			<template #footer>
 				<div class="p-grid p-pt-5">
 					<div class="p-col-2 p-text-bold p-as-center p-text-right" >Auto-Select:</div>
@@ -29,11 +29,11 @@
 <div class="p-fluid p-grid p-formgrid">
 	<div class="p-field p-col-12 p-sm-12 p-lg-2">
 		<label for="basic">Start Months</label>
-		<Calendar Calendar v-model="startMonth" view="month"  dateFormat="yy-mm" yearRange="2000:2030" :showIcon="true" :manualInput="false" />
+		<Calendar Calendar v-model="startMonth" view="month"  dateFormat="yy-mm" yearRange="2000:2030" :showIcon="true" :manualInput="false" :showButtonBar="true" :minDate="minDate" :maxDate="maxDate"/>
 	</div>
 	<div class="p-field p-col-12 p-sm-12 p-lg-2">
 		<label for="basic">End Months</label>
-		<Calendar Calendar v-model="endMonth" view="month"  dateFormat="yy-mm" yearRange="2000:2030" :showIcon="true" :manualInput="false"  :showButtonBar="true"/>
+		<Calendar Calendar v-model="endMonth" view="month"  dateFormat="yy-mm" yearRange="2000:2030" :showIcon="true" :manualInput="false"  :showButtonBar="true" :minDate="minDate" :maxDate="maxDate"/>
 	</div>
 	<div class="p-field p-col-12 p-sm-12 p-lg-1">
 		<label for="bt" >&nbsp;</label>
@@ -68,6 +68,8 @@ export default {
 	data() {
 		return {
 			month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			minDate:null,
+			maxDate:null,
 			costTable:[],
 			selectedDate: null,
 			startMonth: null,
@@ -103,9 +105,14 @@ export default {
 		this.costService = new CostService();
 
 		const today = new Date();
-		var w1 = new Date();
+		var minDate = new Date()
+		var maxDate = new Date()
+		var w1 = new Date()
+		minDate.setMonth(minDate.getMonth()-12)
 		w1.setDate(today.getDate() - 6);
 		this.selectedDate=[w1,today]
+		this.minDate=minDate
+		this.maxDate=maxDate
 		this.autoselected={name: '7D', code: '7D'}
 		
 		const cost = await this.costService.getCost(w1.toISOString().substring(0,10),today.toISOString().substring(0,10),"DAILY")
@@ -118,7 +125,6 @@ export default {
 	},
 	methods: {
 		formatCurrency(value) {
-				console.log(value.toLocaleString('it-IT', {style: 'currency', currency: 'USD'}))
 				return value.toLocaleString('it-IT', {style: 'currency', currency: 'EUR'});
 		},
 		clearClick(){
@@ -137,8 +143,6 @@ export default {
 				endDate = new Date()
 				endDate.setMonth(endDate.getMonth()+1)
 			}else{
-				console.log(this.startMonth)
-				console.log(this.endMonth)
 				if (this.startMonth.toISOString().substring(0,10) == this.endMonth.toISOString().substring(0,10)){
 					
 					startDate = new Date(this.startMonth)
@@ -152,9 +156,6 @@ export default {
 					endDate.setMonth(endDate.getMonth()+1)
 				}
 			}
-			
-			console.log(startDate.toISOString().substring(0,10))
-			console.log(endDate.toISOString().substring(0,10))
 			const cost = await this.costService.getCost(startDate.toISOString().substring(0,10),endDate.toISOString().substring(0,10),"MONTHLY")
 			var result=[]
 			cost.labels.forEach((item,index) => {

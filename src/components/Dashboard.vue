@@ -206,6 +206,7 @@ export default {
 	mounted() {
 		this.eventService.getEvents().then(data => {
 			this.events = data; 
+			console.log(data)
 			this.loading = false;
 		});
 	},
