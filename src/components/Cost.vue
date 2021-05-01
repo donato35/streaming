@@ -28,8 +28,12 @@
 </div>
 <div class="p-fluid p-grid p-formgrid">
 	<div class="p-field p-col-12 p-sm-12 p-lg-2">
-		<label for="basic">Select Months</label>
-		<Calendar Calendar v-model="selectedMonth" view="month" selectionMode="range" dateFormat="yy-mm" yearRange="2000:2030" :showIcon="true" :manualInput="false" />
+		<label for="basic">Start Months</label>
+		<Calendar Calendar v-model="startMonth" view="month"  dateFormat="yy-mm" yearRange="2000:2030" :showIcon="true" :manualInput="false" />
+	</div>
+	<div class="p-field p-col-12 p-sm-12 p-lg-2">
+		<label for="basic">End Months</label>
+		<Calendar Calendar v-model="endMonth" view="month"  dateFormat="yy-mm" yearRange="2000:2030" :showIcon="true" :manualInput="false"  :showButtonBar="true"/>
 	</div>
 	<div class="p-field p-col-12 p-sm-12 p-lg-1">
 		<label for="bt" >&nbsp;</label>
@@ -43,7 +47,7 @@
 			<Column field="month" header="Month" :style="{width:'150px'}" frozen></Column>
 			<Column field="cost" header="Cost" :style="{width:'150px'}" frozen alignFrozen="right">
 				<template #body="{data}">
-					<span class="p-text-bold">{{formatCurrency(data.balance)}}</span>
+					<span class="p-text-bold">{{formatCurrency(data.cost)}}</span>
 				</template>
 			</Column>
 		</DataTable>
@@ -60,11 +64,14 @@ import CostService from '../service/CostService';
 export default {
 	
 	costSevice: null,
+	
 	data() {
 		return {
-			costTable: null,
+			month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			costTable:[],
 			selectedDate: null,
-			selectedMonth: null,
+			startMonth: null,
+			endMonth: null,
 			autoselected: null,
 			dt: [
 				{name: '1D', code: '1D'},
@@ -86,7 +93,6 @@ export default {
 					}
 				]
 			}
-		
 		}
 	},
 	
@@ -102,7 +108,7 @@ export default {
 		this.selectedDate=[w1,today]
 		this.autoselected={name: '7D', code: '7D'}
 		
-		const cost = await this.costService.getDailyCost(w1.toISOString().substring(0,10),today.toISOString().substring(0,10))
+		const cost = await this.costService.getCost(w1.toISOString().substring(0,10),today.toISOString().substring(0,10),"DAILY")
 		var dts =[{
 					label: 'Daily Cost',
 					backgroundColor: '#42A5F5',
@@ -112,14 +118,55 @@ export default {
 	},
 	methods: {
 		formatCurrency(value) {
-				return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+				console.log(value.toLocaleString('it-IT', {style: 'currency', currency: 'USD'}))
+				return value.toLocaleString('it-IT', {style: 'currency', currency: 'EUR'});
 		},
 		clearClick(){
 			this.selectedDate=null
 			this.autoselected=null
 		},
 		async searchBillClick(){
-			console.log()
+			var startDate 
+			var endDate
+			if (!this.startMonth || this.startMonth > this.endMonth){
+				return
+			}
+			if (!this.endMonth){
+				startDate = new Date(this.startMonth)
+				startDate.setDate(startDate.getDate()+1)
+				endDate = new Date()
+				endDate.setMonth(endDate.getMonth()+1)
+			}else{
+				console.log(this.startMonth)
+				console.log(this.endMonth)
+				if (this.startMonth.toISOString().substring(0,10) == this.endMonth.toISOString().substring(0,10)){
+					
+					startDate = new Date(this.startMonth)
+					startDate.setDate(startDate.getDate()+1)
+					endDate = new Date(startDate)
+					endDate.setMonth(endDate.getMonth()+1)
+				}else{
+					startDate = new Date(this.startMonth)
+					startDate.setDate(startDate.getDate()+1)
+					endDate = new Date(this.endMonth)
+					endDate.setMonth(endDate.getMonth()+1)
+				}
+			}
+			
+			console.log(startDate.toISOString().substring(0,10))
+			console.log(endDate.toISOString().substring(0,10))
+			const cost = await this.costService.getCost(startDate.toISOString().substring(0,10),endDate.toISOString().substring(0,10),"MONTHLY")
+			var result=[]
+			cost.labels.forEach((item,index) => {
+				result.push(
+					{
+						year: (new Date(item)).getFullYear(),
+						month: this.month_names_short[(new Date(item)).getMonth()],
+						cost:parseFloat(cost.data[index])
+					}	
+				)
+			});
+			this.costTable =result;
 		},
 		async searchClick(){
 			
@@ -148,9 +195,7 @@ export default {
 				}
 			}
 			
-			console.log(startDate.toISOString().substring(0,10))
-			console.log(endDate.toISOString().substring(0,10))
-			const cost = await this.costService.getDailyCost(startDate.toISOString().substring(0,10),endDate.toISOString().substring(0,10))
+			const cost = await this.costService.getCost(startDate.toISOString().substring(0,10),endDate.toISOString().substring(0,10),"DAILY")
 			var dts =[{
 						label: 'Daily Cost',
 						backgroundColor: '#42A5F5',
