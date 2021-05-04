@@ -36,13 +36,14 @@ export default {
             this.$emit('menu-toggle', event);
         },
 		onTest() {
-            this.connection.send("ciaoooooo");
+			console.log("test")
+            this.connection.send('{"event":"prova","country":"IT"}');
         }
     },
 	created() {
 		this.connection = new WebSocket("wss://5u8ehwe34c.execute-api.eu-west-1.amazonaws.com/production")
-		this.connection.onopen = function(event) {
-			console.log(event)
+		this.connection.onopen = function() {
+			//console.log(event)
 			console.log("Successfully connected to the echo websocket server...")
 		}
 

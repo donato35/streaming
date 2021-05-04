@@ -41,7 +41,7 @@
 	</div>
 	<div class="p-col-12">
 	<div class="card">
-		<h5>Platform Month Cost</h5>
+		<h5>Platform Billing</h5>
 		<DataTable :value="costTable" :paginator="true"  :rows="10"  :scrollable="true" scrollHeight="400px" :loading="false" scrollDirection="both" class="p-mt-3">
 			<Column field="year" header="Year" :style="{width:'150px'}" frozen></Column>
 			<Column field="month" header="Month" :style="{width:'150px'}" frozen></Column>
